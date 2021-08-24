@@ -1,0 +1,88 @@
+﻿@model CSharpMortgageCalcMVC.Models.Loan
+    <div>
+        <h1 class="mb-2">Loan Calculator</h1>
+        <div class="row">
+            <div class="col-md-4 border border-2">
+                <form asp-controller="Home" asp-action="App" method="post">
+
+                    <div class="form-group row mb-3">
+                        <label class="control-label col-sm-3" asp-for="Amount">Loan Amount:</label>
+                        <div class="col-sm-8 ms-2">
+                            <input asp-for="Amount" type="number" class="form-control" aria-label="amount" value="@Model.Amount">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label asp-for="Term" class="control-label col-sm-3" for="term">Term (Months):</label>
+                        <div class="col-sm-8 ms-2">
+                            <input asp-for="Term" type="number" class="form-control" aria-label="term" value="@Model.Term">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label class="control-label col-sm-3" for="rate">Interest Rate:</label>
+                        <div class="col-sm-8 ms-2">
+                            <input asp-for="Rate" type="number" class="form-control" aria-label="rate" value="@Model.Rate">
+                        </div>
+                    </div>
+                    <div class=" offset-sm-3 col-sm-8 mb-2">
+                        <button id="btnSubmit" type="submit" class="btn btn-dark"> Calculate </button>
+                    </div>
+                </form>
+
+
+            </div>
+            <div class="col-md-7 ms-3 border border-2">
+                <h5 class="text-center mt-3">Your Monthly Payments</h5>
+                <div id="monthlyPayment" class="text-center my-5"></div>
+                <div class="row  ">
+                    <div class="col-9">
+                        <div>Total Principal</div>
+                        <div>Total Interest</div>
+                        <div>Total Cost</div>
+                    </div>
+                    <div class="col-3">
+                        <div id="totalPrincipal"> @Model.Amount.ToString("C2") </div>
+                        <div id="totalInterest">@Model.TotalInterest.ToString("C2")</div>
+                        <div id="totalCost">@Model.TotalCost.ToString("C2")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Payment</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Total Interest</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                @foreach (var item in Model.Payments)
+                                {
+                                    <tr>
+                                        <td>@item.Month</td>
+                                        <td>@item.Payment.ToString("C")</td>
+                                        <td>@item.MonthlyPrincipal.ToString("C")</td>
+                                        <td>@item.MonthlyInterest.ToString("C")</td>
+                                        <td>@item.TotalInterest.ToString("C")</td>
+                                        <td>@item.Balance.ToString("C")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        
+
+
+    </div>
